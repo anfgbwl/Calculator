@@ -17,6 +17,7 @@
 		3FE6365C2A655486000C20DC /* CalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE6365B2A655486000C20DC /* CalculatorTests.swift */; };
 		3FE636662A655486000C20DC /* CalculatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE636652A655486000C20DC /* CalculatorUITests.swift */; };
 		3FE636682A655486000C20DC /* CalculatorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE636672A655486000C20DC /* CalculatorUITestsLaunchTests.swift */; };
+		3FE636772A6628D3000C20DC /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE636762A6628D3000C20DC /* Calculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		3FE636612A655486000C20DC /* CalculatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalculatorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FE636652A655486000C20DC /* CalculatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorUITests.swift; sourceTree = "<group>"; };
 		3FE636672A655486000C20DC /* CalculatorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3FE636762A6628D3000C20DC /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				3FE636412A655485000C20DC /* AppDelegate.swift */,
 				3FE636432A655485000C20DC /* SceneDelegate.swift */,
 				3FE636452A655485000C20DC /* ViewController.swift */,
+				3FE636762A6628D3000C20DC /* Calculator.swift */,
 				3FE636472A655485000C20DC /* Main.storyboard */,
 				3FE6364D2A655486000C20DC /* Assets.xcassets */,
 				3FE6364F2A655486000C20DC /* LaunchScreen.storyboard */,
@@ -264,6 +267,7 @@
 				3FE636462A655485000C20DC /* ViewController.swift in Sources */,
 				3FE6364C2A655485000C20DC /* Calculator.xcdatamodeld in Sources */,
 				3FE636422A655485000C20DC /* AppDelegate.swift in Sources */,
+				3FE636772A6628D3000C20DC /* Calculator.swift in Sources */,
 				3FE636442A655485000C20DC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
