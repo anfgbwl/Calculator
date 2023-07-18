@@ -3,9 +3,12 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var display: UILabel!
     
-    var calculator = Calculator()
-    var touchDigit = false
+    var firstNumber: Double? // 입력값(숫자)
+    var operatorSymbol: String? // 연산자
+    var touchDigit = false // 숫자 터치 여부
     
+    let calculator = Calculator() // Calculator 인스턴스 생성
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -32,33 +35,34 @@ class ViewController: UIViewController {
     }
     
     @IBAction func operatorTouched(_ sender: UIButton) {
-        guard let operatorValue = sender.currentTitle else { return }
-        print("Touched operator: \(operatorValue)")
+        if let number = Double(display.text!),
+           let symbol = sender.currentTitle {
+            firstNumber = number
+            operatorSymbol = symbol
+            touchDigit = false
+            print("Touched \(symbol) digit")
 
-        if let displayText = display.text,
-           let displayValue = Double(displayText) {
-            calculator.saveOperand(displayValue)
         }
-        
-        calculator.saveOpration(operatorValue)
-        calculator.calculate()
-        
-        let result = calculator.displayValue
-        
-        if result.truncatingRemainder(dividingBy: 1) == 0 {
-                // 결과 값이 정수인 경우
-                display.text = String(format: "%.0f", result)
-            } else {
-                // 결과 값이 소수인 경우
-                display.text = String(format: "%.1f", result)
-            }
-        touchDigit = false
+    }
+    
+    @IBAction func resultTouched(_ sender: UIButton) {
+        if let number = Double(display.text!),
+           let result = calculator.calculate(with: number) {
+            display.text = String(result)
+            firstNumber = result
+            touchDigit = false
+            print("Result button tapped")
+        } else {
+            // `calculate` 메서드에서 `nil`을 반환한 경우에 대한 처리
+            print("Calculation failed.")
+        }
     }
     
     
     @IBAction func clear(_ sender: UIButton) {
         display.text = "0"
-        calculator.clear()
+        firstNumber = nil
+        operatorSymbol = nil
         touchDigit = false
     }
 }

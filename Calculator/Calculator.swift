@@ -1,58 +1,43 @@
-//
-//  Calculator.swift
-//  Calculator
-//
-//  Created by t2023-m0076 on 2023/07/18.
-//
-
-import Foundation
-
 class Calculator {
+    private var firstNumber: Double?
+    private var operatorSymbol: String?
     
-    var operand: Double?
-    var opration: String?
-    var displayValue: Double = 0
-
-    
-    func saveOperand(_ operand: Double) {
-        self.operand = operand
+    func setOperand(_ operand: Double) {
+        firstNumber = operand
     }
     
-    func saveOpration(_ opration: String) {
-        self.opration = opration
+    func setOperator(_ operatorSymbol: String) {
+        self.operatorSymbol = operatorSymbol
     }
     
-    func calculate() -> Void {
-        guard let operand = operand,
-              let opration = opration else {
-            return
+    func calculate(with secendNumber: Double) -> Double? {
+        guard let firstNumber = firstNumber,
+            let operatorSymbol = operatorSymbol else {
+            return nil
         }
         
-        switch opration {
-        case "+" :
-            displayValue += operand
-        case "-" :
-            displayValue -= operand
-        case "×" :
-            displayValue *= operand
-        case "÷" :
-            guard operand != 0 else {
-                print("Error: Division by zero")
-                return
+        switch operatorSymbol {
+        case "+":
+            return firstNumber + secendNumber
+        case "-":
+            return firstNumber - secendNumber
+        case "×":
+            return firstNumber * secendNumber
+        case "÷":
+            if secendNumber != 0 {
+                return firstNumber / secendNumber
+            } else {
+                print("오류: 0으로 나눌 수 없습니다.")
+                return nil
             }
-            displayValue /= operand
-        default :
-            return
+        default:
+            print("오류: 잘못된 연산자입니다.")
+            return nil
         }
-        
-        self.operand = nil
-        self.opration = nil
     }
     
-    func clear() {
-        displayValue = 0
-        operand = nil
-        opration = nil
+    func reset() {
+        firstNumber = nil
+        operatorSymbol = nil
     }
-    
 }
