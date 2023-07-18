@@ -4,6 +4,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var display: UILabel!
 
+    var firstNumber: Double?
+    var operatorSymbol: String?
     var touchDigit = false
 
     override func viewDidLoad() {
@@ -39,30 +41,58 @@ class ViewController: UIViewController {
     }
     
     @IBAction func operatorTouched(_ sender: UIButton) {
-        guard let operatorValue = sender.currentTitle else { return }
-        print("Touched operator: \(operatorValue)")
+        guard let symbol = sender.currentTitle else { return }
+        print("Touched operator: \(symbol)")
         
-        let calculrator = Calculator()
-        calculrator.setOperation(operatorValue)
-        
-        if let operandValue = Double(display.text ?? "") {
-            calculrator.setOperand(operandValue)
+        if let number = Double(display.text!) {
+            firstNumber = number
+            operatorSymbol = symbol
+            touchDigit = false
         }
-        
-        if let result = calculrator.result {
-            display.text = String(result)
-
-        }
-       
     }
 
-//    @IBAction func resultTouched(_ sender: UIButton) {
-//
-//    }
-//
-//
+    @IBAction func resultTouched(_ sender: UIButton) {
+        if let number = Double(display.text!),
+           let symbol = operatorSymbol,
+           let result = calculate(firstNumber: firstNumber, operatorSymbol: symbol, secondNumber: number) {
+            display.text = String(result)
+            firstNumber = result
+            touchDigit = false
+        }
+    }
+    
+    func calculate(firstNumber: Double?, operatorSymbol: String, secondNumber: Double) -> Double? {
+        guard let fn = firstNumber else {
+            return nil
+        }
+        
+        switch operatorSymbol {
+        case "+":
+            return fn + secondNumber
+        case "-":
+            return fn - secondNumber
+        case "×":
+            return fn * secondNumber
+        case "÷":
+            if secondNumber != 0 {
+                return fn / secondNumber
+            } else {
+                print("ERROR: Division by zero")
+                return nil
+            }
+        default:
+            print("ERROR")
+            return nil
+            
+        }
+    }
+
+
     @IBAction func clear(_ sender: UIButton) {
         display.text = "0"
+        firstNumber = nil
+        operatorSymbol = nil
         touchDigit = false
     }
+    
 }
