@@ -1,43 +1,47 @@
+import Foundation
+
 class Calculator {
-    private var firstNumber: Double?
-    private var operatorSymbol: String?
+//    var firstNumber: Double?
+//    var secondNumber: Double?
+    var operand: Double?
+    var operation: String?
+    var viewController: ViewController?
+    // ViewController 인스턴스에 대한 참조
+    var displayValue: Double = 0
     
     func setOperand(_ operand: Double) {
-        firstNumber = operand
+        self.operand = operand
     }
     
-    func setOperator(_ operatorSymbol: String) {
-        self.operatorSymbol = operatorSymbol
+    func setOperation(_ operation: String) {
+        self.operation = operation
     }
     
-    func calculate(with secendNumber: Double) -> Double? {
-        guard let firstNumber = firstNumber,
-            let operatorSymbol = operatorSymbol else {
+    func setDisplayValue(_ value: Double) {
+        viewController?.display.text = String(value)
+    }
+    
+    var result: Double? {
+        guard let operation = operation, let operand = operand else {
             return nil
         }
-        
-        switch operatorSymbol {
+        switch operation {
         case "+":
-            return firstNumber + secendNumber
+            return operand + displayValue
         case "-":
-            return firstNumber - secendNumber
+            return operand - displayValue
         case "×":
-            return firstNumber * secendNumber
+            return operand * displayValue
         case "÷":
-            if secendNumber != 0 {
-                return firstNumber / secendNumber
-            } else {
-                print("오류: 0으로 나눌 수 없습니다.")
+            guard displayValue != 0 else {
+                print("ERROR: 0으로는 나눌 수 없습니다.")
                 return nil
             }
+            return operand / displayValue
         default:
-            print("오류: 잘못된 연산자입니다.")
             return nil
         }
+
     }
     
-    func reset() {
-        firstNumber = nil
-        operatorSymbol = nil
-    }
 }
