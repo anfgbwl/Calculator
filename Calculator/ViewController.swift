@@ -7,6 +7,7 @@ class ViewController: UIViewController {
     var firstNumber: Double?
     var operatorSymbol: String?
     var touchDigit = false
+    var calculator: Calculator = Calculator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,40 +55,53 @@ class ViewController: UIViewController {
     @IBAction func resultTouched(_ sender: UIButton) {
         if let number = Double(display.text!),
            let symbol = operatorSymbol,
-           let result = calculate(firstNumber: firstNumber, operatorSymbol: symbol, secondNumber: number) {
+           let result = calculator.calculate(firstNumber: firstNumber, operatorSymbol: symbol, secondNumber: number) {
             display.text = String(result)
             firstNumber = result
             touchDigit = false
         }
     }
-    
-    func calculate(firstNumber: Double?, operatorSymbol: String, secondNumber: Double) -> Double? {
-        guard let fn = firstNumber else {
-            return nil
+
+    @IBAction func percent(_ sender: UIButton) {
+        guard let digit = sender.currentTitle else { return }
+        
+        if digit == "0" && display.text == "0" {
+            return
         }
         
-        switch operatorSymbol {
-        case "+":
-            return fn + secondNumber
-        case "-":
-            return fn - secondNumber
-        case "×":
-            return fn * secondNumber
-        case "÷":
-            if secondNumber != 0 {
-                return fn / secondNumber
-            } else {
-                print("ERROR: Division by zero")
-                return nil
+        if touchDigit {
+            if display.text == "0" {
+                display.text = digit
+            } else if let currentNumber = Double(display.text ?? "") {
+                let percentValue = currentNumber * 0.01
+                display.text = String(percentValue)
             }
-        default:
-            print("ERROR")
-            return nil
-            
+        } else {
+            touchDigit = false
         }
     }
-
-
+    
+    @IBAction func plusMinus(_ sender: UIButton) {
+        guard let digit = sender.currentTitle else { return }
+        
+        if digit == "0" && display.text == "0" {
+            return
+        }
+        
+        if touchDigit {
+            if display.text == "0" {
+                display.text = digit
+            } else if let currentNumber = Double(display.text ?? "") {
+                let plusMinusValue = currentNumber * -1
+                display.text = String(plusMinusValue)
+            }
+        } else {
+            touchDigit = false
+        }
+    }
+    
+    
+    
     @IBAction func clear(_ sender: UIButton) {
         display.text = "0"
         firstNumber = nil
