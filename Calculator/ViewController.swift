@@ -1,11 +1,13 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
     @IBOutlet weak var display: UILabel!
-    
-    var calculator = Calculator()
+
+    var firstNumber: Double?
+    var operatorSymbol: String?
     var touchDigit = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -15,8 +17,14 @@ class ViewController: UIViewController {
         print("Touched \(digit) digit")
         
         if digit == "0" && display.text == "0" {
-            // 숫자가 0이고 현재 표시된 값도 0일 경우 무시
             return
+        }
+        
+        if digit == "." {
+            // 이미 "."이 텍스트에 포함되어 있는 경우 입력을 무시
+            if let text = display.text, text.contains(".") {
+                return
+            }
         }
         
         if touchDigit {
@@ -29,36 +37,62 @@ class ViewController: UIViewController {
             display.text = digit
             touchDigit = true
         }
+        
     }
     
     @IBAction func operatorTouched(_ sender: UIButton) {
-        guard let operatorValue = sender.currentTitle else { return }
-        print("Touched operator: \(operatorValue)")
+        guard let symbol = sender.currentTitle else { return }
+        print("Touched operator: \(symbol)")
+        
+        if let number = Double(display.text!) {
+            firstNumber = number
+            operatorSymbol = symbol
+            touchDigit = false
+        }
+    }
 
-        if let displayText = display.text,
-           let displayValue = Double(displayText) {
-            calculator.saveOperand(displayValue)
+    @IBAction func resultTouched(_ sender: UIButton) {
+        if let number = Double(display.text!),
+           let symbol = operatorSymbol,
+           let result = calculate(firstNumber: firstNumber, operatorSymbol: symbol, secondNumber: number) {
+            display.text = String(result)
+            firstNumber = result
+            touchDigit = false
+        }
+    }
+    
+    func calculate(firstNumber: Double?, operatorSymbol: String, secondNumber: Double) -> Double? {
+        guard let fn = firstNumber else {
+            return nil
         }
         
-        calculator.saveOpration(operatorValue)
-        calculator.calculate()
-        
-        let result = calculator.displayValue
-        
-        if result.truncatingRemainder(dividingBy: 1) == 0 {
-                // 결과 값이 정수인 경우
-                display.text = String(format: "%.0f", result)
+        switch operatorSymbol {
+        case "+":
+            return fn + secondNumber
+        case "-":
+            return fn - secondNumber
+        case "×":
+            return fn * secondNumber
+        case "÷":
+            if secondNumber != 0 {
+                return fn / secondNumber
             } else {
-                // 결과 값이 소수인 경우
-                display.text = String(format: "%.1f", result)
+                print("ERROR: Division by zero")
+                return nil
             }
-        touchDigit = false
+        default:
+            print("ERROR")
+            return nil
+            
+        }
     }
-    
-    
+
+
     @IBAction func clear(_ sender: UIButton) {
         display.text = "0"
-        calculator.clear()
+        firstNumber = nil
+        operatorSymbol = nil
         touchDigit = false
     }
+    
 }
