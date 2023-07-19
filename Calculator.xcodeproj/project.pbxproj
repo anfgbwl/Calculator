@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3FA7C26C2A676D7C0018C04D /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA7C26B2A676D7C0018C04D /* MyButton.swift */; };
 		3FE636422A655485000C20DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE636412A655485000C20DC /* AppDelegate.swift */; };
 		3FE636442A655485000C20DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE636432A655485000C20DC /* SceneDelegate.swift */; };
 		3FE636462A655485000C20DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE636452A655485000C20DC /* ViewController.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3FA7C26B2A676D7C0018C04D /* MyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
 		3FE6363E2A655485000C20DC /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FE636412A655485000C20DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FE636432A655485000C20DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,10 +105,11 @@
 		3FE636402A655485000C20DC /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				3FA7C26B2A676D7C0018C04D /* MyButton.swift */,
 				3FE636412A655485000C20DC /* AppDelegate.swift */,
 				3FE636432A655485000C20DC /* SceneDelegate.swift */,
-				3FE636452A655485000C20DC /* ViewController.swift */,
 				3FE636762A6628D3000C20DC /* Calculator.swift */,
+				3FE636452A655485000C20DC /* ViewController.swift */,
 				3FE636472A655485000C20DC /* Main.storyboard */,
 				3FE6364D2A655486000C20DC /* Assets.xcassets */,
 				3FE6364F2A655486000C20DC /* LaunchScreen.storyboard */,
@@ -269,6 +272,7 @@
 				3FE636422A655485000C20DC /* AppDelegate.swift in Sources */,
 				3FE636772A6628D3000C20DC /* Calculator.swift in Sources */,
 				3FE636442A655485000C20DC /* SceneDelegate.swift in Sources */,
+				3FA7C26C2A676D7C0018C04D /* MyButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

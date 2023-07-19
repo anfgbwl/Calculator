@@ -2,9 +2,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var Button: UIButton!
     @IBOutlet weak var display: UILabel!
 
-    var firstNumber: Double?
+    var num1: Double?
     var operatorSymbol: String?
     var touchDigit = false
     var calculator: Calculator = Calculator()
@@ -17,8 +18,10 @@ class ViewController: UIViewController {
         guard let digit = sender.currentTitle else { return }
         print("Touched \(digit) digit")
         
-        if digit == "0" && display.text == "0" {
-            return
+        if digit == "0" || digit == "00" {
+            guard display.text != "0" else { return }
+//            guard문으로 대체 가능(지향)
+//            if display.text == "0" { return }
         }
         
         if digit == "." {
@@ -46,7 +49,7 @@ class ViewController: UIViewController {
         print("Touched operator: \(symbol)")
         
         if let number = Double(display.text!) {
-            firstNumber = number
+            num1 = number
             operatorSymbol = symbol
             touchDigit = false
         }
@@ -54,10 +57,16 @@ class ViewController: UIViewController {
 
     @IBAction func resultTouched(_ sender: UIButton) {
         if let number = Double(display.text!),
-           let symbol = operatorSymbol,
-           let result = calculator.calculate(firstNumber: firstNumber, operatorSymbol: symbol, secondNumber: number) {
-            display.text = String(result)
-            firstNumber = result
+           let symbol = operatorSymbol {
+           let result = calculator.calculate(num1 ?? 0, number, operatorSymbol: symbol)
+            let isDecimal = result.truncatingRemainder(dividingBy: 1) != 0
+            
+            if isDecimal {
+                display.text = String(result)
+            } else {
+                display.text = String(Int(result))
+            }
+            num1 = result
             touchDigit = false
         }
     }
@@ -93,20 +102,25 @@ class ViewController: UIViewController {
                 display.text = digit
             } else if let currentNumber = Double(display.text ?? "") {
                 let plusMinusValue = currentNumber * -1
-                display.text = String(plusMinusValue)
+                
+                let isDecimal = plusMinusValue.truncatingRemainder(dividingBy: 1) != 0
+                
+                if isDecimal {
+                    touchDigit = false
+                } else {
+                    display.text = String(Int(plusMinusValue))
+                }
             }
-        } else {
-            touchDigit = false
         }
     }
-    
-    
-    
-    @IBAction func clear(_ sender: UIButton) {
-        display.text = "0"
-        firstNumber = nil
-        operatorSymbol = nil
-        touchDigit = false
-    }
-    
-}
+            
+            
+            
+            @IBAction func clear(_ sender: UIButton) {
+                display.text = "0"
+                num1 = nil
+                operatorSymbol = nil
+                touchDigit = false
+            }
+            
+        }
