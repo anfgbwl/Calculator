@@ -5,7 +5,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var Button: UIButton!
     @IBOutlet weak var display: UILabel!
 
-    var firstNumber: Double?
+    var num1: Double?
     var operatorSymbol: String?
     var touchDigit = false
     var calculator: Calculator = Calculator()
@@ -49,7 +49,7 @@ class ViewController: UIViewController {
         print("Touched operator: \(symbol)")
         
         if let number = Double(display.text!) {
-            firstNumber = number
+            num1 = number
             operatorSymbol = symbol
             touchDigit = false
         }
@@ -57,8 +57,8 @@ class ViewController: UIViewController {
 
     @IBAction func resultTouched(_ sender: UIButton) {
         if let number = Double(display.text!),
-           let symbol = operatorSymbol,
-           let result = calculator.calculate(firstNumber: firstNumber, operatorSymbol: symbol, secondNumber: number) {
+           let symbol = operatorSymbol {
+           let result = calculator.calculate(num1 ?? 0, number, operatorSymbol: symbol)
             let isDecimal = result.truncatingRemainder(dividingBy: 1) != 0
             
             if isDecimal {
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
             } else {
                 display.text = String(Int(result))
             }
-            firstNumber = result
+            num1 = result
             touchDigit = false
         }
     }
@@ -118,7 +118,7 @@ class ViewController: UIViewController {
             
             @IBAction func clear(_ sender: UIButton) {
                 display.text = "0"
-                firstNumber = nil
+                num1 = nil
                 operatorSymbol = nil
                 touchDigit = false
             }
