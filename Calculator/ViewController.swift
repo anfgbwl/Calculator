@@ -2,6 +2,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var Button: UIButton!
     @IBOutlet weak var display: UILabel!
 
     var firstNumber: Double?
@@ -17,8 +18,10 @@ class ViewController: UIViewController {
         guard let digit = sender.currentTitle else { return }
         print("Touched \(digit) digit")
         
-        if digit == "0" && display.text == "0" {
-            return
+        if digit == "0" || digit == "00" {
+            guard display.text != "0" else { return }
+//            guard문으로 대체 가능(지향)
+//            if display.text == "0" { return }
         }
         
         if digit == "." {
@@ -56,7 +59,13 @@ class ViewController: UIViewController {
         if let number = Double(display.text!),
            let symbol = operatorSymbol,
            let result = calculator.calculate(firstNumber: firstNumber, operatorSymbol: symbol, secondNumber: number) {
-            display.text = String(result)
+            let isDecimal = result.truncatingRemainder(dividingBy: 1) != 0
+            
+            if isDecimal {
+                display.text = String(result)
+            } else {
+                display.text = String(Int(result))
+            }
             firstNumber = result
             touchDigit = false
         }
@@ -93,20 +102,25 @@ class ViewController: UIViewController {
                 display.text = digit
             } else if let currentNumber = Double(display.text ?? "") {
                 let plusMinusValue = currentNumber * -1
-                display.text = String(plusMinusValue)
+                
+                let isDecimal = plusMinusValue.truncatingRemainder(dividingBy: 1) != 0
+                
+                if isDecimal {
+                    touchDigit = false
+                } else {
+                    display.text = String(Int(plusMinusValue))
+                }
             }
-        } else {
-            touchDigit = false
         }
     }
-    
-    
-    
-    @IBAction func clear(_ sender: UIButton) {
-        display.text = "0"
-        firstNumber = nil
-        operatorSymbol = nil
-        touchDigit = false
-    }
-    
-}
+            
+            
+            
+            @IBAction func clear(_ sender: UIButton) {
+                display.text = "0"
+                firstNumber = nil
+                operatorSymbol = nil
+                touchDigit = false
+            }
+            
+        }

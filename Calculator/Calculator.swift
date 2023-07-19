@@ -7,6 +7,7 @@ class Calculator {
             return nil
         }
         
+        
     switch operatorSymbol {
     case "+":
         return fn + secondNumber
@@ -21,6 +22,8 @@ class Calculator {
             print("ERROR: Division by zero")
             return nil
         }
+    case "%%":
+        return fn.truncatingRemainder(dividingBy: secondNumber)
     default:
         print("ERROR")
         return nil
