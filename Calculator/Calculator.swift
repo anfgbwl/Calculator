@@ -26,7 +26,6 @@ class Calculator {
      default:
          print("ERROR")
          return nil
-         
          }
      
      */
@@ -38,29 +37,27 @@ class Calculator {
         
     func calculate(_ num1: Double, _ num2: Double, operatorSymbol: String) -> Double {
         switch operatorSymbol {
-        case "+":
-            return addOperation.calculate(num1, num2)
-        case "-":
-            return substractOperation.calculate(num1, num2)
         case "×":
             return multiplyOperation.calculate(num1, num2)
         case "÷":
             return divideOperation.calculate(num1, num2)
         case "%%":
             return num1.truncatingRemainder(dividingBy: num2)
+        case "+":
+            return addOperation.calculate(num1, num2)
+        case "-":
+            return substractOperation.calculate(num1, num2)
         default:
             print("ERROR")
             return 0
         }
     }
-    
 }
 
 class AbstractOperation {
     func calculate(_ num1: Double, _ num2: Double) -> Double {
         fatalError("ERROR: Need to modify Operation class")
     }
-    
 }
 
 class AddOperation: AbstractOperation {
